@@ -106,3 +106,8 @@
 .tasks li .edit, .tasks li .delete {
   cursor: pointer;
 }
+
+.tasks li span {
+  display: flez;
+  align-items: center;
+}

@@ -4,18 +4,29 @@ import React, { Component } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 // Taredas
-import { FaEdit, FaWindowClose} from 'react-icons/fa';
+import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 import './Main.css';
 
 export default class Main extends Component {
   state = {
     newTask: '',
-    tasks: [
-      'Cozinhar o almoço',
-      'Ir para a academia',
-      'Estudar javascript e react',
-    ],
+    tasks: [],
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { tasks } = this.state;
+    let { newTask } = this.state;
+    newTask = newTask.trim();
+
+    if (tasks.indexOf(newTask) !== -1 || newTask === '') return;
+
+    const newTasks = [...tasks];
+
+    this.setState({
+      tasks: [...newTasks, newTask],
+    });
   };
 
   handleChange = (e) => {
@@ -31,7 +42,7 @@ export default class Main extends Component {
       <div className="main">
         <h1>Lista de tarefas</h1>
 
-        <form action="#" className="form">
+        <form onSubmit={this.handleSubmit} action="#" className="form">
           <input
             onChange={this.handleChange}
             type="text"
@@ -46,10 +57,10 @@ export default class Main extends Component {
           {tasks.map((task) => (
             <li key={task}>
               {task}
-              <div>
+              <span>
                 <FaEdit className="edit" />
                 <FaWindowClose className="delete" />
-              </div>
+              </span>
             </li>
           ))}
         </ul>
