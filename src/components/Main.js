@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // Form
 import { FaPlus } from 'react-icons/fa';
 
-// Taredas
+// Tarefas
 import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 import './Main.css';
@@ -14,6 +14,22 @@ export default class Main extends Component {
     tasks: [],
     index: -1,
   };
+
+  componentDidMount() {
+    const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+    if (!tasks) return;
+
+    this.setState({ tasks });
+  }
+
+  componentDidUpdate(prevProps, prepState) {
+    const { tasks } = this.state;
+
+    if (tasks === prepState.tasks) return;
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
